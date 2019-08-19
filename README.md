@@ -9,7 +9,7 @@
 
 
 <p align="center">
-  <img height="330" src="./figures/Method.png">
+  <img height="330" src="./figures/method.png">
 </p>
 
 <p align="center">
@@ -35,7 +35,7 @@ cd RankSRGAN
 3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/16DkwrBa4cIqAoTbGU_bKMYoATcXC4IT6?usp=sharing) or [Baidu Drive](https://pan.baidu.com/s/1HFZokeAWne9oUkmJBnGr-A). Place the models in `./experiments/pretrained_models/`. We provide three Ranker models and three RankSRGAN models  (see [model list](https://github.com/xinntao/ESRGAN/tree/master/models)).
 4. Run test. We provide ESRGAN model and RRDB_PSNR model and you can config in the `test.py`.
 ```
-python test.py
+python test.py -opt options/test/test_ranksrgan.json
 ```
 5. The results are in `./results` folder.
 

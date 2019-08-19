@@ -1,5 +1,5 @@
 {
-  "name": "SRGAN_MA"
+  "name": "RankSRGAN"
   , "suffix": null
   , "model": "sr"
   , "scale": 4
@@ -9,14 +9,14 @@
     "test_1": { // the 1st test dataset
       "name": "PIRMtest"
       , "mode": "LRHR"
-      ,"dataroot_HR": "/home/wlzhang/BasicSR12/data/val/PIRMtestHR"
-      ,"dataroot_LR": "/home/wlzhang/BasicSR12/data/val/PIRMtest"
+      ,"dataroot_HR": "/home/wlzhang/RankSRGAN/data/val/PIRMtestHR"
+      ,"dataroot_LR": "/home/wlzhang/RankSRGAN/data/val/PIRMtest"
     }
   }
 
   , "path": {
     "root": "/home/wlzhang/BasicSR"
-    , "pretrain_model_G": "/home/wlzhang/myexpriments/SRGAN_V1_pre(paper)/models/"
+    , "pretrain_model_G": "/home/wlzhang/RankSRGAN/experiments/pretrained_models/RankSRGAN_NIQE.pth"
   }
 
   , "network_G": {

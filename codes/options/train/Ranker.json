@@ -1,0 +1,96 @@
+{
+  "name": "Ranker_test" //  
+  ,"use_tb_logger": true
+  ,"model":"rank"
+  ,"scale": 4
+  ,"gpu_ids": [2,5]
+  ,"datasets": {
+    "train": {
+      "name": "DIV2K"
+      ,"mode": "RANK_IMIM_Pair"
+    ,"dataroot_HR": null
+    ,"dataroot_LR":null
+      ,"dataroot_img1": "/home/wlzhang/data/rankdataset/DF2K_train_patch_esrgan/"
+      ,"dataroot_img2": "/home/wlzhang/data/rankdataset/DF2K_train_patch_srgan/"
+    ,"dataroot_img3": "/home/wlzhang/data/rankdataset/DF2K_train_patch_srres/"
+    ,"dataroot_label_file": "/home/wlzhang/data/rankdataset/DF2K_train_patch_label.txt"
+      ,"subset_file": null
+      ,"use_shuffle": true
+      ,"n_workers": 8
+      ,"batch_size": 32
+      ,"HR_size": 128
+      ,"use_flip": true
+      ,"use_rot": true
+    }
+    , "val": {
+      "name": "val_set5"
+      ,"mode": "RANK_IMIM_Pair"
+    ,"dataroot_HR": null
+    ,"dataroot_LR":null
+      ,"dataroot_img1": "/home/wlzhang/data/rankdataset/DF2K_test_patch_all/"
+    ,"dataroot_label_file": "/home/wlzhang/data/rankdataset/DF2K_test_patch_label.txt"
+    }
+  }
+
+  ,"path": {
+    "root": "/home/wlzhang/RankSRGAN",
+    "experiments_root": "/home/wlzhang/RankSRGAN/experiments/Ranker_test",
+    "models": "/home/wlzhang/RankSRGAN/experiments/Ranker_test/models",
+    "log": "/home/wlzhang/RankSRGAN/experiments/Ranker_test",
+    "val_images": "/home/wlzhang/RankSRGAN/experiments/Ranker_test/val_images"
+  }
+
+  ,"network_G": {
+    "which_model_G": "sr_resnet"
+    ,"norm_type": null
+    ,"mode": "CNA"
+    ,"nf": 64
+    ,"nb": 16
+    ,"in_nc": 3
+    ,"out_nc": 3
+    ,"group": 1
+  }
+  ,"network_R": {
+    "which_model_R": "Ranker_VGG12"
+    ,"norm_type": "batch"
+    ,"act_type": "leakyrelu"
+    ,"mode": "CNA"
+    ,"nf": 64
+    ,"nb": 16
+    ,"in_nc": 3
+    ,"out_nc": 3
+    ,"in_nc": 3
+  }
+
+  ,"train": {
+    "lr_R": 1e-3
+    ,"weight_decay_R": 1e-4
+    ,"beta1_G": 0.9
+    ,"lr_D": 1e-4
+    ,"weight_decay_D": 0
+    ,"beta1_D": 0.9
+    ,"lr_scheme": "MultiStepLR"
+    ,"lr_steps": [100000, 200000]
+
+    ,"lr_gamma": 0.5
+
+    // ,"pixel_criterion": "l1"
+    // ,"pixel_weight": 1
+    // ,"feature_criterion": "l1"
+    // ,"feature_weight": 1
+    // ,"gan_type": "vanilla"
+    // ,"gan_weight": 5e-3
+
+    ,"D_update_ratio": 1
+    ,"D_init_iters": 0
+
+    ,"manual_seed": 0
+    ,"niter": 400000
+    ,"val_freq": 500
+  }
+
+  ,"logger": {
+    "print_freq": 200
+    ,"save_checkpoint_freq": 500
+  }
+}

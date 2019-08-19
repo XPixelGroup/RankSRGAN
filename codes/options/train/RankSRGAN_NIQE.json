@@ -1,0 +1,111 @@
+{
+  "name": "RankSRGANx4_NIQE" //  SRGANx4_RANK_V1 
+  ,"use_tb_logger": true
+  ,"model":"ranksrgan"
+  ,"scale": 4
+  ,"gpu_ids": [2]
+
+  ,"datasets": {
+    "train": {
+      "name": "DIV2K"
+      ,"mode": "LRHR"
+      ,"dataroot_HR": "/home/wlzhang/BasicSR12/data/DIV2K800_sub.lmdb"
+      ,"dataroot_LR": "/home/wlzhang/BasicSR12/data/DIV2K800_sub_bicLRx4.lmdb"
+      ,"subset_file": null
+      ,"use_shuffle": true
+      ,"n_workers": 8
+      ,"batch_size": 8
+      ,"HR_size": 296
+      ,"use_flip": true
+      ,"use_rot": true
+      , "random_flip": false
+      , "random_scale": false
+    }
+    , "val": {
+      "name": "val_PIRM"
+      ,"mode": "LRHR"
+      ,"dataroot_HR": "/home/wlzhang/BasicSR12/data/val/PIRMtestHR"
+      ,"dataroot_LR": "/home/wlzhang/BasicSR12/data/val/PIRMtest"
+    }
+  }
+
+  ,"path": {
+    "root": "/home/wlzhang/RankSRGAN",
+    // "resume_state": "../experiments/RankSRGANx4_NIQE/training_state/152000.state",
+    "pretrain_model_G": "/home/wlzhang/RankSRGAN/experiments/pretrained_models/SRResNet_bicx4_in3nf64nb16.pth",
+    // "pretrain_model_G": "/home/wlzhang/BasicSR12/experiments/pretrained_models/SRResNet_bicx4_in3nf64nb16.pth",
+
+    "pretrain_model_R": "/home/wlzhang/RankSRGAN/experiments/pretrained_models/Ranker_NIQE.pth", 
+    // "pretrain_model_R": "/home/wlzhang/myexpriments/RANK_ESTIMATOR_DF2K_bs64_s296_margin05_rangef55_d01_datatrain_oversample3_V1(paperV2)/models/300000_E.pth", 
+
+
+    "experiments_root": "/home/wlzhang/RankSRGAN/experiments/RankSRGANx4_NIQE",
+    "models": "/home/wlzhang/RankSRGAN/experiments/RankSRGANx4_NIQE/models",
+    "log": "/home/wlzhang/RankSRGAN/experiments/RankSRGANx4_NIQE",
+    "val_images": "/home/wlzhang/RankSRGAN/experiments/RankSRGANx4_NIQE/val_images"
+  }
+
+  ,"network_G": {
+    "which_model_G": "sr_resnet"
+    ,"norm_type": null
+    ,"mode": "CNA"
+    ,"nf": 64
+    ,"nb": 16
+    ,"in_nc": 3
+    ,"out_nc": 3
+    ,"group": 1
+  }
+  ,"network_D": {
+    "which_model_D": "discriminator_vgg_128"
+    ,"norm_type": "batch"
+    ,"act_type": "leakyrelu"
+    ,"mode": "CNA"
+    ,"nf": 64
+    ,"in_nc": 3
+  },
+    "network_R": {
+    "which_model_R": "Ranker_VGG12",
+    "norm_type": "batch",
+    "act_type": "leakyrelu",
+    "mode": "CNA",
+    "nf": 64,
+    "in_nc": 3
+  },
+"train": {
+    "lr_G": 0.0001,
+    "train_D": 1,
+    "weight_decay_G": 0,
+    "beta1_G": 0.9,
+    "lr_D": 0.0001,
+    "weight_decay_D": 0,
+    "beta1_D": 0.9,
+    "lr_scheme": "MultiStepLR",
+    "lr_steps": [
+      50000,
+      100000,
+      200000,
+      300000
+    ],
+    "lr_gamma": 0.5,
+    "pixel_criterion": "l1",
+    "pixel_weight": 0,
+    "feature_criterion": "l1",
+    "feature_weight": 1,
+    "gan_type": "vanilla",
+    "gan_weight": 0.005,
+    "D_update_ratio": 1,
+    "D_init_iters": 0,
+    "R_weight": 0.03, //
+    "R_bias": 0,
+    "manual_seed": 0,
+    "niter": 500000.0,
+    "val_freq": 2
+  },
+  "logger": {
+    "print_freq": 2
+    ,"save_checkpoint_freq": 2
+  },
+  "timestamp": "180804-004247",
+  "is_train": true,
+  "fine_tune": false
+}

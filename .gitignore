@@ -1,0 +1,5 @@
+data/*
+results/*
+tb_logger/*
+experiments/*
+!data/readme.md

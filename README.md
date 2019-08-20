@@ -2,7 +2,7 @@
 ### [Paper](https://wenlongzhang0724.github.io/Projects/RankSRGAN) | [Supplementary file](https://wenlongzhang0724.github.io/Projects/RankSRGAN) | [Project Page](https://wenlongzhang0724.github.io/Projects/RankSRGAN)
 ### RankSRGAN: Generative Adversarial Networks with Ranker for Image Super-Resolution
 
- By [Wenlong Zhang](https://wenlongzhang0724.github.io/), Yihao Liu, [Chao Dong](https://scholar.google.com.hk/citations?user=OSDCB0UAAAAJ&hl=en), [Yu Qiao](http://mmlab.siat.ac.cn/yuqiao/)
+ By [Wenlong Zhang](https://wenlongzhang0724.github.io/), [Yihao Liu](http://xpixel.group/2010/03/29/yihaoliu.html), [Chao Dong](https://scholar.google.com.hk/citations?user=OSDCB0UAAAAJ&hl=en), [Yu Qiao](http://mmlab.siat.ac.cn/yuqiao/)
 
 
 ---
@@ -66,5 +66,5 @@ python train_PI.py -opt options/train/RankSRGAN_NIQE.json
 Using the train.py can output the convergence curves with NIQE and PSNR; Using the train_PI.py can output the convergence curves with NIQE, Ma, PI and PSNR.
 
 ## Acknowledgement
-
+- Part of this codes was done by Yihao Liu.
 - This codes are based on [BasicSR](https://github.com/xinntao/BasicSR).

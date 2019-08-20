@@ -1,4 +1,4 @@
-# RankSRGAN (under construction)
+# RankSRGAN 
 ### [Paper](https://arxiv.org/abs/1908.06382) | [Supplementary file](https://arxiv.org/abs/1908.06382) | [Project Page](https://wenlongzhang0724.github.io/Projects/RankSRGAN)
 ### RankSRGAN: Generative Adversarial Networks with Ranker for Image Super-Resolution
 
@@ -24,7 +24,7 @@
 - Python packages: `pip install numpy opencv-python lmdb`
 - [option] Python packages: [`pip install tensorboardX`](https://github.com/lanpa/tensorboardX), for visualizing curves.
 
-# Codes
+# Codes (under testing)
 ## How to Test 
 1. Clone this github repo. 
 ```

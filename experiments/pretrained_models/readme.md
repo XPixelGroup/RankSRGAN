@@ -2,9 +2,11 @@
 
 ### Pretrained models
 
-`SRResNet_bicx4_in3nf64nb16.pth`: the well-trained SRResNet model in PSNR orientation. 
+1. `SRResNet_bicx4_in3nf64nb16.pth`: the well-trained SRResNet model in PSNR orientation. 
+2. `SRGAN.pth`: the pretrained model SRGAN implemented by [BasicSR](https://github.com/xinntao/BasicSR). 
+3. `ESRGAN_SuperSR.pth`: the pretrained model [ESRGAN_SuperSR](https://github.com/xinntao/ESRGAN). 
 
-We provide Three pretrained Ranker models :
+### Three pretrained Ranker models :
 1. `Ranker_NIQE.pth`: the well-trained Ranker with **NIQE** metric. 
 2. `Ranker_Ma.pth`: the well-trained Ranker with **Ma** metric. 
 3. `Ranker_PI.pth`: the well-trained Ranker with **PI** metric. 

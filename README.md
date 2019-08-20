@@ -33,7 +33,7 @@ git clone https://github.com/WenlongZhang0724/RankSRGAN.git
 cd RankSRGAN
 ```
 2. Place your own **low-resolution images** in `./LR` folder.
-3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/16DkwrBa4cIqAoTbGU_bKMYoATcXC4IT6?usp=sharing) or [Baidu Drive](https://pan.baidu.com/s/1HFZokeAWne9oUkmJBnGr-A). Place the models in `./experiments/pretrained_models/`. We provide three Ranker models and three RankSRGAN models  (see [model list](https://github.com/xinntao/ESRGAN/tree/master/models)).
+3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/16DkwrBa4cIqAoTbGU_bKMYoATcXC4IT6?usp=sharing) or [Baidu Drive](https://pan.baidu.com/s/1HFZokeAWne9oUkmJBnGr-A). Place the models in `./experiments/pretrained_models/`. We provide three Ranker models and three RankSRGAN models  (see [model list](experiments/pretrained_models)).
 4. Run test. We provide RankSRGAN (NIQE, Ma, PI) model and you can config in the `test.py`.
 ```
 python test.py -opt options/test/test_ranksrgan.json

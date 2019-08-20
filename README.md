@@ -33,7 +33,7 @@ cd RankSRGAN
 ```
 2. Place your own **low-resolution images** in `./LR` folder.
 3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/16DkwrBa4cIqAoTbGU_bKMYoATcXC4IT6?usp=sharing) or [Baidu Drive](https://pan.baidu.com/s/1HFZokeAWne9oUkmJBnGr-A). Place the models in `./experiments/pretrained_models/`. We provide three Ranker models and three RankSRGAN models  (see [model list](https://github.com/xinntao/ESRGAN/tree/master/models)).
-4. Run test. We provide ESRGAN model and RRDB_PSNR model and you can config in the `test.py`.
+4. Run test. We provide RankSRGAN (NIQE, Ma, PI) model and you can config in the `test.py`.
 ```
 python test.py -opt options/test/test_ranksrgan.json
 ```
@@ -66,5 +66,5 @@ python train_PI.py -opt options/train/RankSRGAN_NIQE.json
 Using the train.py can output the convergence curves with NIQE and PSNR; Using the train_PI.py can output the convergence curves with NIQE, Ma, PI and PSNR.
 
 ## Acknowledgement
-- Part of this codes was done by Yihao Liu.
+- Part of this codes was done by [Yihao Liu](http://xpixel.group/2010/03/29/yihaoliu.html).
 - This codes are based on [BasicSR](https://github.com/xinntao/BasicSR).

@@ -24,7 +24,8 @@
 - Python packages: `pip install numpy opencv-python lmdb`
 - [option] Python packages: [`pip install tensorboardX`](https://github.com/lanpa/tensorboardX), for visualizing curves.
 
-# Codes (under testing)
+# Codes 
+This version is under testing. We also provide more details of RankSRGAN in near future.
 ## How to Test 
 1. Clone this github repo. 
 ```

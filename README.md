@@ -1,5 +1,5 @@
 # RankSRGAN (under construction)
-### [Paper](https://wenlongzhang0724.github.io/Projects/RankSRGAN) | [Supplementary file](https://wenlongzhang0724.github.io/Projects/RankSRGAN) | [Project Page](https://wenlongzhang0724.github.io/Projects/RankSRGAN)
+### [Paper](https://arxiv.org/abs/1908.06382) | [Supplementary file](https://arxiv.org/abs/1908.06382) | [Project Page](https://wenlongzhang0724.github.io/Projects/RankSRGAN)
 ### RankSRGAN: Generative Adversarial Networks with Ranker for Image Super-Resolution
 
  By [Wenlong Zhang](https://wenlongzhang0724.github.io/), [Yihao Liu](http://xpixel.group/2010/03/29/yihaoliu.html), [Chao Dong](https://scholar.google.com.hk/citations?user=OSDCB0UAAAAJ&hl=en), [Yu Qiao](http://mmlab.siat.ac.cn/yuqiao/)

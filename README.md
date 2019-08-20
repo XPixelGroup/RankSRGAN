@@ -42,7 +42,7 @@ python test.py -opt options/test/test_ranksrgan.json
 ## How to Train
 ### Train Ranker
 1. Download [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and [Flickr2K](https://github.com/LimBee/NTIRE2017) from [Google Drive](https://drive.google.com/drive/folders/1B-uaxvV9qeuQ-t7MFiN1oEdA6dKnj2vW?usp=sharing) or [Baidu Drive](https://pan.baidu.com/s/1CFIML6KfQVYGZSNFrhMXmA)
-2. Generate rank dataset (coming soon)
+2. Generate rank dataset [./datascripts/generate_rankdataset/](https://github.com/WenlongZhang0724/RankSRGAN/new/master/datascripts/generate_rankdataset)
 3. Run command:
 ```c++
 python train.py -opt options/train/Ranker.json

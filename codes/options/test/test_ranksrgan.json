@@ -12,11 +12,26 @@
       ,"dataroot_HR": "/home/wlzhang/RankSRGAN/data/val/PIRMtestHR"
       ,"dataroot_LR": "/home/wlzhang/RankSRGAN/data/val/PIRMtest"
     }
-  }
+     , "test_2": { // the 2nd test dataset
+      "name": "val_set14"
+      , "mode": "LRHR"
+      , "dataroot_HR": "/home/wlzhang/BasicSR12/data/val/Set14_mod"
+      , "dataroot_LR": null
 
+  }
+    , "test_3": { // the 3nd test dataset
+      "name": "val_BSDS100"
+      , "mode": "LRHR"
+      , "dataroot_HR": "/home/wlzhang/BasicSR12/data/val/BSDS100_mod"
+      , "dataroot_LR": null
+    }
+  }
   , "path": {
     "root": "/home/wlzhang/BasicSR"
     , "pretrain_model_G": "/home/wlzhang/RankSRGAN/experiments/pretrained_models/RankSRGAN_NIQE.pth"
+    // , "pretrain_model_G": "/home/wlzhang/RankSRGAN/experiments/pretrained_models/ESRGAN_SuperSR.pth"
+    // , "pretrain_model_G": "/home/wlzhang/RankSRGAN/experiments/pretrained_models/SRGAN.pth"
+
   }
 
   , "network_G": {

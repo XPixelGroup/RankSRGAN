@@ -1,29 +1,29 @@
 {
-  "name": "Ranker_test" //  
-  ,"use_tb_logger": true
+  "name": "Ranker_NIQE" //  
+  ,"use_tb_logger": true // use tensorboard_logger
   ,"model":"rank"
   ,"scale": 4
-  ,"gpu_ids": [2,5]
-  ,"datasets": {
-    "train": {
-      "name": "DIV2K"
+  ,"gpu_ids": [2,5] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
+  ,"datasets": { // configure the training and validation rank datasets
+    "train": { // training dataset configurations
+      "name": "DF2K_train_rankdataset"
       ,"mode": "RANK_IMIM_Pair"
     ,"dataroot_HR": null
     ,"dataroot_LR":null
-      ,"dataroot_img1": "/home/wlzhang/data/rankdataset/DF2K_train_patch_esrgan/"
-      ,"dataroot_img2": "/home/wlzhang/data/rankdataset/DF2K_train_patch_srgan/"
-    ,"dataroot_img3": "/home/wlzhang/data/rankdataset/DF2K_train_patch_srres/"
-    ,"dataroot_label_file": "/home/wlzhang/data/rankdataset/DF2K_train_patch_label.txt"
+      ,"dataroot_img1": "/home/wlzhang/data/rankdataset/DF2K_train_patch_esrgan/" // Rankdataset: Perceptual level1 data root
+      ,"dataroot_img2": "/home/wlzhang/data/rankdataset/DF2K_train_patch_srgan/" // Rankdataset: Perceptual level2 data root
+    ,"dataroot_img3": "/home/wlzhang/data/rankdataset/DF2K_train_patch_srres/" // Rankdataset: Perceptual level3 data root
+    ,"dataroot_label_file": "/home/wlzhang/data/rankdataset/DF2K_train_patch_label.txt" // Rankdataset: Perceptual rank label root
       ,"subset_file": null
       ,"use_shuffle": true
-      ,"n_workers": 8
-      ,"batch_size": 32
-      ,"HR_size": 128
+      ,"n_workers": 8 // number of data load workers
+      ,"batch_size": 32 
+      ,"HR_size": 128 
       ,"use_flip": true
       ,"use_rot": true
     }
     , "val": {
-      "name": "val_set5"
+      "name": "DF2K_valid_rankdataset" // validation dataset configurations
       ,"mode": "RANK_IMIM_Pair"
     ,"dataroot_HR": null
     ,"dataroot_LR":null
@@ -32,12 +32,12 @@
     }
   }
 
-  ,"path": {
-    "root": "/home/wlzhang/RankSRGAN",
-    "experiments_root": "/home/wlzhang/RankSRGAN/experiments/Ranker_test",
-    "models": "/home/wlzhang/RankSRGAN/experiments/Ranker_test/models",
-    "log": "/home/wlzhang/RankSRGAN/experiments/Ranker_test",
-    "val_images": "/home/wlzhang/RankSRGAN/experiments/Ranker_test/val_images"
+  ,"path": { // root path
+    "root": "/home/wlzhang/RankSRGAN", 
+    "experiments_root": "/home/wlzhang/RankSRGAN/experiments/Ranker_NIQE",
+    "models": "/home/wlzhang/RankSRGAN/experiments/Ranker_NIQE/models",
+    "log": "/home/wlzhang/RankSRGAN/experiments/Ranker_NIQE",
+    "val_images": "/home/wlzhang/RankSRGAN/experiments/Ranker_NIQE/val_images"
   }
 
   ,"network_G": {
@@ -50,9 +50,9 @@
     ,"out_nc": 3
     ,"group": 1
   }
-  ,"network_R": {
+  ,"network_R": { // configurations for the network Ranker
     "which_model_R": "Ranker_VGG12"
-    ,"norm_type": "batch"
+    ,"norm_type": "batch" // null | "batch", norm type 
     ,"act_type": "leakyrelu"
     ,"mode": "CNA"
     ,"nf": 64
@@ -62,15 +62,15 @@
     ,"in_nc": 3
   }
 
-  ,"train": {
-    "lr_R": 1e-3
+  ,"train": { // training strategies 
+    "lr_R": 1e-3 // initialized learning rate for R
     ,"weight_decay_R": 1e-4
     ,"beta1_G": 0.9
     ,"lr_D": 1e-4
     ,"weight_decay_D": 0
     ,"beta1_D": 0.9
     ,"lr_scheme": "MultiStepLR"
-    ,"lr_steps": [100000, 200000]
+    ,"lr_steps": [100000, 200000] // learning rate decay scheme
 
     ,"lr_gamma": 0.5
 
@@ -84,13 +84,13 @@
     ,"D_update_ratio": 1
     ,"D_init_iters": 0
 
-    ,"manual_seed": 0
-    ,"niter": 400000
-    ,"val_freq": 500
+    ,"manual_seed": 0 
+    ,"niter": 400000 // total training iteration
+    ,"val_freq": 5000 // validation frequency
   }
-
-  ,"logger": {
+ 
+  ,"logger": { // logger configurations
     "print_freq": 200
-    ,"save_checkpoint_freq": 500
+    ,"save_checkpoint_freq": 5000
   }
 }

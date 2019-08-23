@@ -6,244 +6,216 @@
 ## Table
 Click for detailed explanations for each json file.
 
-1. [train_sr.json](#train_sr_json)
-1. [train_esrgan.json](#train_esrgan_json) (also for training srgan)
-1. [train_sftgan.json](#train_sftgan_json)
+1. [RankSRGAN_NIQE.json](#RankSRGAN_NIQE_json)
+2. [Ranker.json](#Ranker_json) 
 
-## train_sr_json
+## RankSRGAN_NIQE_json
 ```c++
 {
-  "name": "debug_001_RRDB_PSNR_x4_DIV2K" //  leading 'debug_' enters the 'debug' mode. Please remove it during formal training
-  , "use_tb_logger": true // use tensorboard_logger, ref: `https://github.com/xinntao/BasicSR/tree/master/codes/utils`
-  , "model":"sr" // model type, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/models/__init__.py`
-  , "scale": 4 // scale factor for SR
-  , "gpu_ids": [0] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
+  "name": "RankSRGANx4_NIQE" 
+  ,"model":"ranksrgan" // use tensorboard_logger, ref: `https://github.com/xinntao/BasicSR/tree/master/codes/utils`
+  ,"scale": 4
+  ,"gpu_ids": [2] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
 
-  , "datasets": { // configure the training and validation datasets
+  ,"datasets": {  // configure the training and validation datasets
     "train": { // training dataset configurations
-      "name": "DIV2K" // dataset name
-      , "mode": "LRHR" // dataset mode, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/data/__init__.py`
-      , "dataroot_HR": "/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub.lmdb" // HR data root
-      , "dataroot_LR": "/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub_bicLRx4.lmdb" // LR data root
-      , "subset_file": null // use a subset of an image folder
-      , "use_shuffle": true // shuffle the dataset
-      , "n_workers": 8 // number of data load workers
-      , "batch_size": 16
-      , "HR_size": 128 // 128 | 192, cropped HR patch size
-      , "use_flip": true // whether use horizontal and vertical flips
-      , "use_rot": true // whether use rotations: 90, 190, 270 degrees
+      "name": "DIV2K"
+      ,"mode": "LRHR"
+      ,"dataroot_HR": "/home/wlzhang/BasicSR12/data/DIV2K800_sub.lmdb" // HR data root
+      ,"dataroot_LR": "/home/wlzhang/BasicSR12/data/DIV2K800_sub_bicLRx4.lmdb" // LR data root
+      ,"subset_file": null
+      ,"use_shuffle": true
+      ,"n_workers": 8  // number of data load workers
+      ,"batch_size": 8
+      ,"HR_size": 296 // 128 for SRGAN | 296 for RankSRGAN, cropped HR patch size
+      ,"use_flip": true
+      ,"use_rot": true
+      , "random_flip": false // whether use horizontal and vertical flips
+      , "random_scale": false // whether use rotations: 90, 190, 270 degrees
     }
     , "val": { // validation dataset configurations
-      "name": "val_set5"
-      , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/SSD/xtwang/BasicSR_datasets/val_set5/Set5"
-      , "dataroot_LR": "/mnt/SSD/xtwang/BasicSR_datasets/val_set5/Set5_bicLRx4"
+      "name": "val_PIRM"
+      ,"mode": "LRHR"
+      ,"dataroot_HR": "/home/wlzhang/BasicSR12/data/val/PIRMtestHR"
+      ,"dataroot_LR": "/home/wlzhang/BasicSR12/data/val/PIRMtest"
     }
   }
 
-  , "path": {
-    "root": "/home/xtwang/Projects/BasicSR" // root path
-    , "pretrain_model_G": null // path of the pretrained model
+  ,"path": {
+    "root": "/home/wlzhang/RankSRGAN", // root path
+    // "resume_state": "../experiments/RankSRGANx4_NIQE/training_state/152000.state", // Resume the training from 152000 iteration
+    "pretrain_model_G": "/home/wlzhang/RankSRGAN/experiments/pretrained_models/SRResNet_bicx4_in3nf64nb16.pth", // G network pretrain model
+    "pretrain_model_R": "/home/wlzhang/RankSRGAN/experiments/pretrained_models/Ranker_NIQE.pth", // R network pretrain model
+
+    "experiments_root": "/home/wlzhang/RankSRGAN/experiments/RankSRGANx4_NIQE",
+    "models": "/home/wlzhang/RankSRGAN/experiments/RankSRGANx4_NIQE/models",
+    "log": "/home/wlzhang/RankSRGAN/experiments/RankSRGANx4_NIQE",
+    "val_images": "/home/wlzhang/RankSRGAN/experiments/RankSRGANx4_NIQE/val_images"
   }
 
-  , "network_G": { // configurations for the network G
-    "which_model_G": "RRDB_net" // RRDB_net | sr_resnet, network structures, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/models/networks.py`
-    , "norm_type": null // null | "batch", norm type 
-    , "mode": "CNA" // Convolution mode: CNA for Conv-Norm_Activation
-    , "nf": 64 // number of features for each layer
-    , "nb": 23 // number of blocks
-    , "in_nc": 3 // input channels
-    , "out_nc": 3 // output channels
-    , "gc": 32 // grouwing channels, for Dense Block
-    , "group": 1 // convolution group, for ResNeXt Block
+  ,"network_G": { // configurations for the network G
+    "which_model_G": "sr_resnet"
+    ,"norm_type": null // null | "batch", norm type 
+    ,"mode": "CNA" // Convolution mode: CNA for Conv-Norm_Activation
+    ,"nf": 64 // number of features for each layer
+    ,"nb": 16 // number of blocks
+    ,"in_nc": 3 // input channels
+    ,"out_nc": 3 // output channels
+    ,"group": 1
   }
-
-  , "train": { // training strategies
-    "lr_G": 2e-4 // initialized learning rate
-    , "lr_scheme": "MultiStepLR" // learning rate decay scheme
-    , "lr_steps": [200000, 400000, 600000, 800000] // at which steps, decay the learining rate
-    , "lr_gamma": 0.5 
-
-    , "pixel_criterion": "l1" // "l1" | "l2", criterion
-    , "pixel_weight": 1.0
-    , "val_freq": 5e3 // validation frequency
-
-    , "manual_seed": 0
-    , "niter": 1e6 // total training iteration
-  }
-
-  , "logger": { // logger configurations
+  ,"network_D": { // configurations for the network D
+    "which_model_D": "discriminator_vgg_128"
+    ,"norm_type": "batch"
+    ,"act_type": "leakyrelu"
+    ,"mode": "CNA"
+    ,"nf": 64
+    ,"in_nc": 3
+  },
+    "network_R": {
+    "which_model_R": "Ranker_VGG12",
+    "norm_type": "batch",
+    "act_type": "leakyrelu",
+    "mode": "CNA",
+    "nf": 64,
+    "in_nc": 3
+  },
+"train": { // training strategies
+    "lr_G": 0.0001, // initialized learning rate for G
+    "train_D": 1,
+    "weight_decay_G": 0,
+    "beta1_G": 0.9,
+    "lr_D": 0.0001, // initialized learning rate for D
+    "weight_decay_D": 0,
+    "beta1_D": 0.9,
+    "lr_scheme": "MultiStepLR", // learning rate decay scheme
+    "lr_steps": [
+      50000,
+      100000,
+      200000,
+      300000
+    ],
+    "lr_gamma": 0.5,
+    "pixel_criterion": "l1", // "l1" | "l2", pixel criterion
+    "pixel_weight": 0,
+    "feature_criterion": "l1", // perceptual criterion (VGG loss)
+    "feature_weight": 1,
+    "gan_type": "vanilla", // GAN type
+    "gan_weight": 0.005,
+    "D_update_ratio": 1,
+    "D_init_iters": 0,
+    "R_weight": 0.03, // Ranker-content loss
+    "R_bias": 0,
+    "manual_seed": 0,
+    "niter": 500000.0, // total training iteration
+    "val_freq": 5000 // validation frequency
+  },
+  "logger": { // logger configurations
     "print_freq": 200
-    , "save_checkpoint_freq": 5e3
-  }
+    ,"save_checkpoint_freq": 5000
+  },
+  "timestamp": "180804-004247",
+  "is_train": true,
+  "fine_tune": false
 }
+
 ```
-## train_esrgan_json
-```c++
-{
-  "name": "debug_002_RRDB_ESRGAN_x4_DIV2K" // leading 'debug_' enters the 'debug' mode. Please remove it during formal training
-  , "use_tb_logger": true // use tensorboard_logger, ref: `https://github.com/xinntao/BasicSR/tree/master/codes/utils`
-  , "model":"srragan" // "srgan" |"srragan", model type, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/models/__init__.py`
-  , "scale": 4 // scale factor for SR
-  , "gpu_ids": [0] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
-
-  , "datasets": { // configure the training and validation datasets
-    "train": { // training dataset configurations
-      "name": "DIV2K" // dataset name
-      , "mode": "LRHR" // dataset mode, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/data/__init__.py`
-      , "dataroot_HR": "/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub.lmdb" // HR data root
-      , "dataroot_LR": "/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub_bicLRx4.lmdb" // LR data root
-      , "subset_file": null // use a subset of an image folder
-      , "use_shuffle": true // shuffle the dataset
-      , "n_workers": 8 // number of data load workers
-      , "batch_size": 16
-      , "HR_size": 128 // 128 | 192, cropped HR patch size
-      , "use_flip": true // whether use horizontal and vertical flips
-      , "use_rot": true // whether use rotations: 90, 190, 270 degrees
-    }
-    , "val": { // validation dataset configurations
-      "name": "val_set14_part"
-      , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/SSD/xtwang/BasicSR_datasets/val_set14_part/Set14"
-      , "dataroot_LR": "/mnt/SSD/xtwang/BasicSR_datasets/val_set14_part/Set14_bicLRx4"
-    }
-  }
-
-  , "path": {
-    "root": "/home/xtwang/Projects/BasicSR" // root path
-    , "pretrain_model_G": "../experiments/pretrained_models/RRDB_PSNR_x4.pth" // path of the pretrained model
-  }
-
-  , "network_G": { // configurations for the network G
-    "which_model_G": "RRDB_net" // RRDB_net | sr_resnet, network structures, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/models/networks.py`
-    , "norm_type": null // null | "batch", norm type 
-    , "mode": "CNA" // Convolution mode: CNA for Conv-Norm_Activation
-    , "nf": 64 // number of features for each layer
-    , "nb": 23 // number of blocks
-    , "in_nc": 3 // input channels
-    , "out_nc": 3 // output channels
-    , "gc": 32 // grouwing channels, for Dense Block
-    , "group": 1 // convolution group, for ResNeXt Block
-  }
-  , "network_D": {// configurations for the network D
-    "which_model_D": "discriminator_vgg_128" // network structures, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/models/networks.py`
-    , "norm_type": "batch"
-    , "act_type": "leakyrelu"
-    , "mode": "CNA"
-    , "nf": 64
-    , "in_nc": 3
-  }
-
-  , "train": { // training strategies
-    "lr_G": 1e-4 // initialized learning rate for G
-    , "weight_decay_G": 0
-    , "beta1_G": 0.9
-    , "lr_D": 1e-4 // initialized learning rate for D
-    , "weight_decay_D": 0
-    , "beta1_D": 0.9 
-    , "lr_scheme": "MultiStepLR" // learning rate decay scheme
-    , "lr_steps": [50000, 100000, 200000, 300000] // at which steps, decay the learining rate
-    , "lr_gamma": 0.5
-
-    , "pixel_criterion": "l1" // "l1" | "l2", pixel criterion
-    , "pixel_weight": 1e-2
-    , "feature_criterion": "l1" // perceptual criterion (VGG loss)
-    , "feature_weight": 1
-    , "gan_type": "vanilla" // GAN type
-    , "gan_weight": 5e-3
-
-    //for wgan-gp
-    // , "D_update_ratio": 1
-    // , "D_init_iters": 0
-    // , "gp_weigth": 10
-
-    , "manual_seed": 0
-    , "niter": 5e5 // total training iteration
-    , "val_freq": 5e3 // validation frequency
-  }
-
-  , "logger": { // logger configurations
-    "print_freq": 200
-    , "save_checkpoint_freq": 5e3
-  }
-}
-```
-## train_sftgan_json
+## Ranker_json
 
 ```c++
 {
-  "name": "debug_003_SFTGANx4_OST" // leading 'debug_' enters the 'debug' mode. Please remove it during formal training
-  , "use_tb_logger": false // use tensorboard_logger, ref: `https://github.com/xinntao/BasicSR/tree/master/codes/utils`
-  , "model": "sftgan" // model type, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/models/__init__.py`
-  , "scale": 4 // scale factor for SR
-  , "gpu_ids": [0] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
-
-  , "datasets": { // configure the training and validation datasets
+  "name": "Ranker_NIQE" //  
+  ,"use_tb_logger": true // use tensorboard_logger
+  ,"model":"rank"
+  ,"scale": 4
+  ,"gpu_ids": [2,5] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
+  ,"datasets": { // configure the training and validation rank datasets
     "train": { // training dataset configurations
-      "name": "OST" // dataset name
-      , "mode": "LRHRseg_bg" // dataset mode, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/data/__init__.py`
-      , "dataroot_HR": "/mnt/SSD/xtwang/BasicSR_datasets/OST/train/img" // HR data root
-      , "dataroot_HR_bg": "/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub" // HR images for background, here, SFTGAN uses DIV2K images as the training images for the background category
-      , "dataroot_LR": null // if null, generate the LR images on-the-fl
-      , "subset_file": null // use a subset of an image folder
-      , "use_shuffle": true // shuffle the dataset
-      , "n_workers": 8 // number of data load workers
-      , "batch_size": 16
-      , "HR_size": 96 // cropped HR patch size
-      , "use_flip": true // whether use horizontal and vertical flips
-      , "use_rot": false // whether use rotations: 90, 190, 270 degrees
+      "name": "DF2K_train_rankdataset"
+      ,"mode": "RANK_IMIM_Pair"
+    ,"dataroot_HR": null
+    ,"dataroot_LR":null
+      ,"dataroot_img1": "/home/wlzhang/data/rankdataset/DF2K_train_patch_esrgan/" // Rankdataset: Perceptual level1 data root
+      ,"dataroot_img2": "/home/wlzhang/data/rankdataset/DF2K_train_patch_srgan/" // Rankdataset: Perceptual level2 data root
+    ,"dataroot_img3": "/home/wlzhang/data/rankdataset/DF2K_train_patch_srres/" // Rankdataset: Perceptual level3 data root
+    ,"dataroot_label_file": "/home/wlzhang/data/rankdataset/DF2K_train_patch_label.txt" // Rankdataset: Perceptual rank label root
+      ,"subset_file": null
+      ,"use_shuffle": true
+      ,"n_workers": 8 // number of data load workers
+      ,"batch_size": 32 
+      ,"HR_size": 128 
+      ,"use_flip": true
+      ,"use_rot": true
     }
-    , "val": { // validation dataset configurations
-      "name": "val_OST300_part"
-      , "mode": "LRHRseg_bg"
-      , "dataroot_HR": "/mnt/SSD/xtwang/BasicSR_datasets/OST/val/img"
-      , "dataroot_LR": null
+    , "val": {
+      "name": "DF2K_valid_rankdataset" // validation dataset configurations
+      ,"mode": "RANK_IMIM_Pair"
+    ,"dataroot_HR": null
+    ,"dataroot_LR":null
+      ,"dataroot_img1": "/home/wlzhang/data/rankdataset/DF2K_test_patch_all/"
+    ,"dataroot_label_file": "/home/wlzhang/data/rankdataset/DF2K_test_patch_label.txt"
     }
   }
 
-  , "path": {
-    "root": "/home/xtwang/Projects/BasicSR" // root path
-    , "pretrain_model_G": "../experiments/pretrained_models/sft_net_ini.pth" // path of the pretrained model
+  ,"path": { // root path
+    "root": "/home/wlzhang/RankSRGAN", 
+    "experiments_root": "/home/wlzhang/RankSRGAN/experiments/Ranker_NIQE",
+    "models": "/home/wlzhang/RankSRGAN/experiments/Ranker_NIQE/models",
+    "log": "/home/wlzhang/RankSRGAN/experiments/Ranker_NIQE",
+    "val_images": "/home/wlzhang/RankSRGAN/experiments/Ranker_NIQE/val_images"
   }
 
-  , "network_G": { // configurations for the network G
-    "which_model_G": "sft_arch" // network structures, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/models/networks.py`
+  ,"network_G": {
+    "which_model_G": "sr_resnet"
+    ,"norm_type": null
+    ,"mode": "CNA"
+    ,"nf": 64
+    ,"nb": 16
+    ,"in_nc": 3
+    ,"out_nc": 3
+    ,"group": 1
   }
-  , "network_D": { // configurations for the network D
-    "which_model_D": "dis_acd" // network structures, ref: `https://github.com/xinntao/BasicSR/blob/master/codes/models/networks.py`
-  }
-
-  , "train": { // training strategies
-    "lr_G": 1e-4 // initialized learning rate for G
-    , "weight_decay_G": 0
-    , "beta1_G": 0.9
-    , "lr_D": 1e-4 // initialized learning rate for D
-    , "weight_decay_D": 0
-    , "beta1_D": 0.9
-    , "lr_scheme": "MultiStepLR" // learning rate decay scheme
-    , "lr_steps": [50000, 100000, 150000, 200000] // at which steps, decay the learining rate
-    , "lr_gamma": 0.5
-
-    , "pixel_criterion": "l1" // "l1" | "l2", pixel criterion
-    , "pixel_weight": 0
-    , "feature_criterion": "l1" // perceptual criterion (VGG loss)
-    , "feature_weight": 1
-    , "gan_type": "vanilla" // GAN type
-    , "gan_weight": 5e-3
-
-    //for wgan-gp
-    // , "D_update_ratio": 1
-    // , "D_init_iters": 0
-    // , "gp_weigth": 10
-
-    , "manual_seed": 0
-    , "niter": 6e5 // total training iteration
-    , "val_freq": 2e3 // validation frequency
+  ,"network_R": { // configurations for the network Ranker
+    "which_model_R": "Ranker_VGG12"
+    ,"norm_type": "batch" // null | "batch", norm type 
+    ,"act_type": "leakyrelu"
+    ,"mode": "CNA"
+    ,"nf": 64
+    ,"nb": 16
+    ,"in_nc": 3
+    ,"out_nc": 3
+    ,"in_nc": 3
   }
 
-  , "logger": { // logger configurations
+  ,"train": { // training strategies 
+    "lr_R": 1e-3 // initialized learning rate for R
+    ,"weight_decay_R": 1e-4
+    ,"beta1_G": 0.9
+    ,"lr_D": 1e-4
+    ,"weight_decay_D": 0
+    ,"beta1_D": 0.9
+    ,"lr_scheme": "MultiStepLR"
+    ,"lr_steps": [100000, 200000] // learning rate decay scheme
+
+    ,"lr_gamma": 0.5
+
+    // ,"pixel_criterion": "l1"
+    // ,"pixel_weight": 1
+    // ,"feature_criterion": "l1"
+    // ,"feature_weight": 1
+    // ,"gan_type": "vanilla"
+    // ,"gan_weight": 5e-3
+
+    ,"D_update_ratio": 1
+    ,"D_init_iters": 0
+
+    ,"manual_seed": 0 
+    ,"niter": 400000 // total training iteration
+    ,"val_freq": 5000 // validation frequency
+  }
+ 
+  ,"logger": { // logger configurations
     "print_freq": 200
-    , "save_checkpoint_freq": 2e3
+    ,"save_checkpoint_freq": 5000
   }
 }
 '''

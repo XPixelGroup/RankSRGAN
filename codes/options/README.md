@@ -13,7 +13,7 @@ Click for detailed explanations for each json file.
 ```c++
 {
   "name": "RankSRGANx4_NIQE" 
-  ,"model":"ranksrgan" // use tensorboard_logger, ref: `https://github.com/xinntao/BasicSR/tree/master/codes/utils`
+  ,"model":"ranksrgan" // use tensorboard_logger
   ,"scale": 4
   ,"gpu_ids": [2] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
 

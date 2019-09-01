@@ -2,7 +2,7 @@
   "name": "RankSRGANx4_NIQE" 
   ,"model":"ranksrgan" // use tensorboard_logger
   ,"scale": 4
-  ,"gpu_ids": [2] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
+  ,"gpu_ids": [2,3] // specify GPUs, actually it sets the `CUDA_VISIBLE_DEVICES`
 
   ,"datasets": {  // configure the training and validation datasets
     "train": { // training dataset configurations

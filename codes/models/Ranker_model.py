@@ -4,8 +4,8 @@ import logging
 
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 from torch.optim import lr_scheduler
+from torch.nn.parallel import DataParallel, DistributedDataParallel
 
 import models.networks as networks
 from .base_model import BaseModel
@@ -19,16 +19,19 @@ class Ranker_Model(BaseModel):
 
     def __init__(self, opt):
         super(Ranker_Model, self).__init__(opt)
+
+        if opt['dist']:
+            self.rank = torch.distributed.get_rank()
+        else:
+            self.rank = -1  # non dist training
         train_opt = opt['train']
-        # self.input_img1 = self.Tensor()
-        # self.label_score1 = self.Tensor()
-        # self.input_img2 = self.Tensor()
-        # self.label_score2 = self.Tensor()
 
-        # self.label = self.Tensor()
-
-        # define network and load pretrained models
-        self.netR = networks.define_R(opt)
+        # define networks and load pretrained models
+        self.netR = networks.define_R(opt).to(self.device)
+        if opt['dist']:
+            self.netR = DistributedDataParallel(self.netR, device_ids=[torch.cuda.current_device()])
+        else:
+            self.netR = DataParallel(self.netR)
         self.load()
 
         if self.is_train:

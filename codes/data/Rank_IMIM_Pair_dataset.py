@@ -22,13 +22,19 @@ class RANK_IMIM_Pair_Dataset(data.Dataset):
     def __init__(self, opt, is_train):
         super(RANK_IMIM_Pair_Dataset, self).__init__()
         self.opt = opt
+
         self.is_train = is_train
 
         # read image list from lmdb or image files
-        self.img_env1, self.paths_img1 = util.get_image_paths(opt['data_type'], opt['dataroot_img1'])
-        self.img_env2, self.paths_img2 = util.get_image_paths(opt['data_type'], opt['dataroot_img2'])
-        self.img_env3, self.paths_img3 = util.get_image_paths(opt['data_type'], opt['dataroot_img3'])
-        # print(opt['dataroot_label_file'])
+
+        self.paths_img1, self.sizes_GT = util.get_image_paths(opt['data_type'], opt['dataroot_img1'])
+        self.paths_img2, self.sizes_GT = util.get_image_paths(opt['data_type'], opt['dataroot_img2'])
+        self.paths_img3, self.sizes_GT = util.get_image_paths(opt['data_type'], opt['dataroot_img3'])
+
+        self.img_env1 = None
+        self.img_env2 = None
+        self.img_env3 = None
+
         self.label_path = opt['dataroot_label_file']
 
         # get image label scores
@@ -45,12 +51,7 @@ class RANK_IMIM_Pair_Dataset(data.Dataset):
         self.random_scale_list = None
 
     def __getitem__(self, index):
-        HR_path, LR_path = None, None
 
-        scale = self.opt['scale']
-        HR_size = self.opt['HR_size']
-
-        # print('index',index)
         if self.is_train:
             # get img1 and img1 label score
             # choice = random.choice(['img1_img2','img1_img2','img1_img2','img1_img3','img2_img3']) #Oversampling for hard sample

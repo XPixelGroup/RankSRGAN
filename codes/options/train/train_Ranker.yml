@@ -1,0 +1,67 @@
+#### general settings
+name: 001_VGG_Ranker_DF2K
+use_tb_logger: true
+model: rank
+distortion: sr
+scale: 4
+gpu_ids: [0,1]
+
+#### datasets
+datasets:
+  train:
+    name: Rankdataset
+    mode: RANK_IMIM_Pair
+    dataroot_img1: /home/wlzhang/data/rankdataset/DF2K_train_patch_esrgan/
+    dataroot_img2: /home/wlzhang/data/rankdataset/DF2K_train_patch_srgan/
+    dataroot_img3: /home/wlzhang/data/rankdataset/DF2K_train_patch_srres/
+    dataroot_label_file: /home/wlzhang/data/rankdataset/DF2K_train_patch_label.txt  # Rankdataset: Perceptual rank label root
+
+    use_shuffle: true
+    n_workers: 6  # per GPU
+    batch_size: 16
+    GT_size: 128
+    use_flip: true
+    use_rot: true
+    color: RGB
+  val:
+    name: DF2K_valid_rankdataset
+    mode: RANK_IMIM_Pair
+    dataroot_img1: /home/wlzhang/data/rankdataset/DF2K_test_patch_all/
+    dataroot_label_file: /home/wlzhang/data/rankdataset/DF2K_test_patch_label.txt
+
+#### network structures
+network_G:
+  which_model_G: RRDBNet
+  in_nc: 3
+  out_nc: 3
+  nf: 64
+  nb: 23
+network_R: # configurations for the network Ranker
+  which_model_R: Ranker_VGG12
+  in_nc: 3
+  nf: 64
+
+#### path
+path:
+  strict_load: true
+  resume_state: ~
+
+#### training settings: learning rate scheme, loss
+train:
+  lr_R: !!float 1e-4
+  weight_decay_R: !!float 1e-4
+  beta1_G: 0.9
+  lr_scheme: MultiStepLR
+
+  niter: 400000
+  warmup_iter: -1  # no warm up
+  lr_steps: [100000, 200000]
+  lr_gamma: 0.5
+
+  manual_seed: 10
+  val_freq: !!float 5e1
+
+#### logger
+logger:
+  print_freq: 10
+  save_checkpoint_freq: !!float 5e1

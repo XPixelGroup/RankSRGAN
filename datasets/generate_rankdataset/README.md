@@ -8,15 +8,15 @@ or [Baidu Drive](https://pan.baidu.com/s/1HFZokeAWne9oUkmJBnGr-A). You could pla
 2. Download [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) and [Flickr2K](https://github.com/LimBee/NTIRE2017)
 from [Google Drive](https://drive.google.com/drive/folders/1B-uaxvV9qeuQ-t7MFiN1oEdA6dKnj2vW?usp=sharing) or
 [Baidu Drive](https://pan.baidu.com/s/1CFIML6KfQVYGZSNFrhMXmA)
-3. Generate Three level images using 'How to test' with [`codes/options/test/test_ranksrgan.json`](../../master/codes/options/test/test_ranksrgan.json) 
+3. Generate Three level images using 'How to test' with [`codes/options/test/test_RankSRGAN.yml`](../../master/codes/options/test/test_RankSRGAN.yml) 
 ### Generate rank dataset
-4. **Training dataset:** Use  [`./datasets/generate_rankdataset/generate_rankdataset.m`](../../master/datascripts/generate_rankdataset/generate_rankdataset.m)
+4. **Training dataset:** Use  [`./datasets/generate_rankdataset/generate_rankdataset.m`](../../master/datasets/generate_rankdataset/generate_rankdataset.m)
    to generate three level training patchs.
-5. **Validation dataset:** Use  [`./datasets/generate_rankdataset/move_valid.py`](../../master/datascripts/generate_rankdataset/move_valid.py)
+5. **Validation dataset:** Use  [`./datasets/generate_rankdataset/move_valid.py`](../../master/datasets/generate_rankdataset/move_valid.py)
    to generate three level patchs.
-6. **Rank label:** Use  [`./datasets/generate_rankdataset/generate_train_ranklabel.m`](../../master/datascripts/generate_rankdataset/generate_train_ranklabel.m)
+6. **Rank label:** Use  [`./datasets/generate_rankdataset/generate_train_ranklabel.m`](../../master/datasets/generate_rankdataset/generate_train_ranklabel.m)
    to generate Training Rank label (NIQE). 
-   Use  [`./datasets/generate_rankdataset/generate_valid_ranklabel.m`](../../master/datascripts/generate_rankdataset/generate_valid_ranklabel.m)
+   Use  [`./datasets/generate_rankdataset/generate_valid_ranklabel.m`](../../master/datasets/generate_rankdataset/generate_valid_ranklabel.m)
    to generate Validation Rank label (NIQE). 
    
    

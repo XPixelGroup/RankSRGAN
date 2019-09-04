@@ -59,9 +59,9 @@ train:
   lr_gamma: 0.5
 
   manual_seed: 10
-  val_freq: !!float 5e1
+  val_freq: !!float 5e3
 
 #### logger
 logger:
-  print_freq: 10
-  save_checkpoint_freq: !!float 5e1
+  print_freq: 200
+  save_checkpoint_freq: !!float 5e3

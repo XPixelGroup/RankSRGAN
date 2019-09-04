@@ -38,7 +38,7 @@ cd RankSRGAN
 3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/1_KhEc_zBRW7iLeEJITU3i923DC6wv51T?usp=sharing). Place the models in `./experiments/pretrained_models/`. We provide three Ranker models and three RankSRGAN models  (see [model list](experiments/pretrained_models)).
 4. Run test. We provide RankSRGAN (NIQE, Ma, PI) model and you can config in the `test.py`.
 ```
-python test.py -opt options/test/test_ranksrgan.json
+python test.py -opt options/test/test_RanSRGAN.yml
 ```
 5. The results are in `./results` folder.
 
@@ -48,7 +48,7 @@ python test.py -opt options/test/test_ranksrgan.json
 2. Generate rank dataset [./datasets/generate_rankdataset/](datasets/generate_rankdataset)
 3. Run command:
 ```c++
-python train.py -opt options/train/Ranker.json
+python train.py -opt options/train/train_Ranker.yml
 ```
 
 ### Train RankSRGAN
@@ -59,12 +59,12 @@ We use a PSNR-oriented pretrained SR model to initialize the parameters for bett
 3. Modify the configuration file  `options/train/train_RankSRGAN.json`
 4. Run command: 
 ```c++
-python train.py -opt options/train/train_RankSRGAN.json
+python train.py -opt options/train/train_RankSRGAN.yml
 ```
 or
 
 ```c++
-python train_niqe.py -opt options/train/RankSRGAN_NIQE.json
+python train_niqe.py -opt options/train/train_RankSRGAN.yml
 ```
 Using the train.py can output the convergence curves with PSNR; Using the train_niqe.py can output the convergence curves with NIQE and PSNR.
 

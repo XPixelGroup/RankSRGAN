@@ -38,7 +38,7 @@ cd RankSRGAN
 3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/1_KhEc_zBRW7iLeEJITU3i923DC6wv51T?usp=sharing). Place the models in `./experiments/pretrained_models/`. We provide three Ranker models and three RankSRGAN models  (see [model list](experiments/pretrained_models)).
 4. Run test. We provide RankSRGAN (NIQE, Ma, PI) model and you can config in the `test.py`.
 ```
-python test.py -opt options/test/test_RanSRGAN.yml
+python test.py -opt options/test/test_RankSRGAN.yml
 ```
 5. The results are in `./results` folder.
 

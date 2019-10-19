@@ -48,7 +48,7 @@ python test.py -opt options/test/test_RankSRGAN.yml
 2. Generate rank dataset [./datasets/generate_rankdataset/](datasets/generate_rankdataset)
 3. Run command:
 ```c++
-python train.py -opt options/train/train_Ranker.yml
+python train_rank.py -opt options/train/train_Ranker.yml
 ```
 
 ### Train RankSRGAN
